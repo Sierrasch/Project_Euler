@@ -28,12 +28,42 @@ int main()
       { 1, 70, 54, 71, 83, 51, 54, 69, 16, 92, 33, 48, 61, 43, 52,  1, 89, 19, 67, 48}
     };
 
+
+  int largestProduct = 0; 
   for (int i = 0; i < NUMROWS; i ++){
     for (int j = 0; j < NUMCOLS; j++){
-      std::cout << grid[i][j] << " ";
+      
+      //check horizontally to the right      
+      if (j < NUMCOLS - 3){
+	int newProduct = grid[i][j] * grid[i][j+1] * grid[i][j+2] * grid[i][j+3];
+	if (newProduct > largestProduct)
+	  largestProduct = newProduct;
+      }
+
+      //check vertically down
+      if (i < NUMROWS - 3){
+	int newProduct = grid[i][j] * grid[i+1][j] * grid[i+2][j] * grid[i+3][j];
+	if (newProduct > largestProduct)
+	  largestProduct = newProduct;
+      }
+      
+      //check diagonally down and right      
+      if (j < NUMCOLS - 3 && i < NUMROWS - 3){
+	int newProduct = grid[i][j] * grid[i+1][j+1] * grid[i+2][j+2] * grid[i+3][j+3];
+	if (newProduct > largestProduct)
+	  largestProduct = newProduct;
+      }
+      
+      //check diagonally down and left      
+      if (j < NUMCOLS - 3 && i >= 3){
+	int newProduct = grid[i][j] * grid[i-1][j+1] * grid[i-2][j+2] * grid[i-3][j+3];
+	if (newProduct > largestProduct)
+	  largestProduct = newProduct;
+      }
     }
-    std::cout << std::endl;
   }
+
+  std::cout << "The largest product is: " << largestProduct << std::endl;
 
   return 0;
 }
